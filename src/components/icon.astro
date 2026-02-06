@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"i"> {
+  icon: string;
+  pack?: string;
+  color?: string;
+  size?: string;
+}
+
+const {
+  icon,
+  pack = "bx",
+  class: className,
+  color = "primary",
+  size = "bx-sm",
+  ...props
+} = Astro.props;
+
+const colorClass = `text-${color}`;
+---
+
+<i
+  class:list={[`${pack} bx-${icon} ${colorClass} ${size}`, className]}
+  {...props}></i>

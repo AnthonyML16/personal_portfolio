@@ -1,0 +1,73 @@
+---
+import "../styles/global.css";
+import Header from "../components/header.astro";
+import Footer from "../components/footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Portafolio de Anthony",
+  description = "Bienvenido al portafolio personal de Anthony",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <!-- Basic Icons -->
+    <link
+      href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- Filled Icons -->
+    <link
+      href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css"
+      rel="stylesheet"
+    />
+    <!-- Brand Icons -->
+    <link
+      href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css"
+      rel="stylesheet"
+    />
+    <!-- Transformations Icons -->
+    <link
+      href="https://cdn.boxicons.com/transformations.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="bg-neutral-100 dark:bg-neutral-950 font-display text-slate-900 dark:text-white min-h-screen"
+  >
+    <!-- <div class="fixed inset-0 bento-grid-bg pointer-events-none"></div> -->
+    <div id="spotlight" class="fixed inset-0 pointer-events-none"></div>
+
+    <Header />
+
+    <main class="max-w-7xl mx-auto px-6 pt-28 pb-12 relative z-10">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script>
+      const spotlight = document.getElementById("spotlight");
+      document.addEventListener("mousemove", (e) => {
+        if (spotlight) {
+          const x = e.clientX;
+          const y = e.clientY;
+          spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(6, 182, 212, 0.1) 0%, transparent 20%)`;
+        }
+      });
+    </script>
+  </body>
+</html>

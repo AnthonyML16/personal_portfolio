@@ -1,0 +1,56 @@
+---
+import Card from "./main.astro";
+import Icon from "../icon.astro";
+import { getGitHubMetrics } from "../../services/github";
+
+const USERNAME = import.meta.env.GITHUB_USERNAME;
+const { total, columns } = await getGitHubMetrics(USERNAME);
+
+const getColorClass = (count: number) => {
+  if (count === 0) return "bg-primary/10";
+  if (count < 3) return "bg-primary/30";
+  if (count < 6) return "bg-primary/60";
+  return "bg-primary/90";
+};
+---
+
+<Card class="md:col-span-4 relative">
+  <div class="flex justify-between items-start mb-4">
+    <div>
+      <h3
+        class="text-white/60 text-sm font-semibold uppercase tracking-widest mb-1"
+      >
+        GitHub Activity
+      </h3>
+      <p class="text-2xl font-bold text-white tracking-tight">
+        {total.toLocaleString()}+ Commits
+      </p>
+    </div>
+    <Icon icon="chart-trend" />
+  </div>
+
+  <div class="flex flex-col gap-1">
+    <div class="flex gap-1 overflow-visible"> {columns.map((col) => (
+        <div class="flex flex-col gap-1">
+          {col.map((day) => (
+            <div class="relative group"> <div 
+                class={`size-3 rounded-sm transition-all duration-300 ${getColorClass(day.contributionCount)} group-hover:ring-1 group-hover:ring-white/50`}
+              ></div>
+              
+              <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50">
+                <div class="bg-slate-900/95 backdrop-blur-md text-white text-[10px] py-1 px-2 rounded border border-white/10 whitespace-nowrap shadow-xl">
+                  <span class="font-bold text-primary">{day.contributionCount} commits</span>
+                  <span class="text-white/60 ml-1">{day.formattedDate}</span>
+                </div>
+                <div class="w-2 h-2 bg-slate-900 border-r border-b border-white/10 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+    <p class="text-xs text-slate-500 mt-2">
+      Participación activa diaria en proyectos
+    </p>
+  </div>
+</Card>

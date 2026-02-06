@@ -1,0 +1,344 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Projects | Anthony's Portfolio"
+  description="Showcase of my recent work and projects"
+>
+  <div class="mb-12">
+    <div
+      class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 mb-4"
+    >
+      <span class="size-2 rounded-full bg-cyan-400 animate-pulse"></span>
+      <span class="text-xs font-bold text-cyan-400 tracking-widest uppercase"
+        >Portfolio 2024</span
+      >
+    </div>
+    <h2 class="text-5xl md:text-6xl font-black tracking-tight mb-4">
+      Featured Works
+    </h2>
+    <p
+      class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl leading-relaxed"
+    >
+      A collection of digital products, interfaces, and tools built with a focus
+      on performance, accessibility, and clean aesthetics.
+    </p>
+  </div>
+  <!-- Bento Grid Layout -->
+  <div class="grid grid-cols-12 gap-6 auto-rows-[240px]">
+    <!-- Main Featured Card (Project of the Year) -->
+    <div
+      class="col-span-12 lg:col-span-8 row-span-2 group relative rounded-xl overflow-hidden border border-white/10 cyan-glow"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+        data-alt="Futuristic data analytics dashboard with dark theme and neon cyan accents"
+        style='
+                background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjL_4SHtY75-_vE6rMcXz-qNiLOQIvcXqdlNf_Wd3QCz86brays1asJXNj6dFJ6TiGJqq1EQC9eO0bog6a3LzE9FYqPi4jnkI71KI5kFASbYh8vmw0ugLzov1X4zHOOIXoQn3e5EJc0ocTceAb34ZraZ3V-lpvKpG8wWHtwCzwgF5GDOjN9gSSHkgDAD10pfCfD814YLuQUkCvq0Os_z5rdGN4d4RwpLm3J_ao49Ajeq93c55Y8zFyAO3hBeV_YgAFxAIzGWobkTM");
+              '
+      >
+      </div>
+      <div
+        class="absolute inset-0 project-card-overlay opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+      >
+      </div>
+      <div class="absolute inset-0 p-8 flex flex-col justify-end">
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span
+            class="px-3 py-1 bg-cyan-400/20 border border-cyan-400/40 rounded-full text-[10px] font-bold text-cyan-400 uppercase tracking-wider"
+            >Project of the Year</span
+          >
+          <span
+            class="px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-bold text-white uppercase tracking-wider"
+            >Next.js</span
+          >
+          <span
+            class="px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-bold text-white uppercase tracking-wider"
+            >Tailwind CSS</span
+          >
+        </div>
+        <h3
+          class="text-3xl md:text-4xl font-bold text-white mb-3 max-w-xl leading-tight"
+        >
+          AI Analytics Dashboard: Real-time Data Visualization
+        </h3>
+        <p class="text-white/80 text-lg mb-6 max-w-2xl">
+          A comprehensive platform processing millions of events per second with
+          custom WebGL visualizations and predictive modeling integration.
+        </p>
+        <div class="flex gap-4">
+          <button
+            class="bg-cyan-400 text-neutral-950 h-11 px-6 rounded-lg font-bold flex items-center gap-2 hover:translate-y-[-2px] transition-all"
+          >
+            <span>View Case Study</span>
+            <span class="material-symbols-outlined text-lg">arrow_forward</span>
+          </button>
+          <button
+            class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white h-11 px-6 rounded-lg font-bold flex items-center gap-2 transition-all"
+          >
+            <span class="material-symbols-outlined text-lg">link</span>
+            <span>Live Demo</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Secondary Card 1 -->
+    <div
+      class="col-span-12 md:col-span-6 lg:col-span-4 row-span-1 group relative rounded-xl overflow-hidden border border-white/10 cyan-glow"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+        data-alt="Modern e-commerce interface showing product grid with minimalist design"
+        style='
+                background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB5bX3jET-HARCHxjeFOojN-MmNlhoOQ6qCdj6JZ9R5BjU4sQyFthg9rg1mR_KRlN6I6lSPgUNpCASwT5T_ko2WkunbH5NWGrm9lelTfLGPo6fegVX-OPaTGijvpL7ZtTlsBLQu9mzLXwlamPkQ0XhEvoP8b295tuZ-FpzG5ufjcbKLW5W_VVtw5zdkssTtVoMwKGiuyi3EkRjWrSKdtutPrabiXR_2ei3pEsl4QQUjM85uQd2JcA40UNOfQu0LciOTslSfG3oTvTw");
+              '
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-neutral-950/90 to-transparent p-6 flex flex-col justify-end"
+      >
+        <div class="flex gap-2 mb-3">
+          <span
+            class="text-[10px] font-bold border border-cyan-400/50 text-cyan-400 px-2 py-0.5 rounded"
+            >TypeScript</span
+          >
+        </div>
+        <h4
+          class="text-xl font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors"
+        >
+          Lumina E-store
+        </h4>
+        <p class="text-white/60 text-sm line-clamp-2">
+          High-performance headless commerce with Stripe integration.
+        </p>
+      </div>
+    </div>
+    <!-- Secondary Card 2 -->
+    <div
+      class="col-span-12 md:col-span-6 lg:col-span-4 row-span-1 group relative rounded-xl overflow-hidden border border-white/10 cyan-glow"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+        data-alt="Abstract mobile app screens showing a social feed and user profile"
+        style='
+                background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA6H6hvWMifI6usN62-t6aOGcqdqxUJ1ao7GMjYOGPnmKRzKNFwH-IeOiyWzO0Gnspltslv4XEfIBAthDTxpIn0UpxhIftxO7RE1PT56yI3DUznd7vLBzUpGzZsRPoe0Mbaaqw7VGNJelHBHsaLHDDVJ1VsbCsOgnE4X9iNYOO97Ffq0957b307RCvYBKZmjP_JinwTKTHDrVMsjRm6OhhtA6DyI3I2cdLA2GmaXWvpZgM8W3UpoaKDjmtn0Rpxbv5sQs4NQN38mIs");
+              '
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-neutral-950/90 to-transparent p-6 flex flex-col justify-end"
+      >
+        <div class="flex gap-2 mb-3">
+          <span
+            class="text-[10px] font-bold border border-cyan-400/50 text-cyan-400 px-2 py-0.5 rounded"
+            >React Native</span
+          >
+        </div>
+        <h4
+          class="text-xl font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors"
+        >
+          Social Connect
+        </h4>
+        <p class="text-white/60 text-sm line-clamp-2">
+          Cross-platform social media application with real-time messaging.
+        </p>
+      </div>
+    </div>
+    <!-- Vertical Card 3 -->
+    <div
+      class="col-span-12 md:col-span-6 lg:col-span-4 row-span-2 group relative rounded-xl overflow-hidden border border-white/10 cyan-glow"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+        data-alt="Crypto trading dashboard with candle stick charts and cyan highlights"
+        style='
+                background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDBoLGkHJPAkGChQiWpxORByUl9YqjmR4RdM7gqCO_g098GiTgNkf8lhAo_PwDaBreGCZMRvNXW1e_BOQ06iDm2r_Fy5O5iGWW5U0uzRg0-oS4dRb2FRRlkbWI3Vbhc738mxBafsBk8bBm652Cmmwyokxli5TnX6sakJmZRYHPAe_VjAbIcUascUWyrOltyEhzMEb4WI6WSBsgCIidPf2TM4CnQW18BjBWp0isMhfZ7frOk8HI2qp9kk6YSPS4gS1SHQeBUBU4GlAM");
+              '
+      >
+      </div>
+      <div
+        class="absolute inset-0 project-card-overlay opacity-40 group-hover:opacity-80 transition-opacity duration-500"
+      >
+      </div>
+      <div class="absolute inset-0 p-8 flex flex-col justify-end">
+        <div class="mb-4">
+          <div class="flex flex-wrap gap-2">
+            <span
+              class="px-2 py-1 bg-cyan-400/10 border border-cyan-400/30 rounded text-[9px] font-bold text-cyan-400 tracking-widest uppercase"
+              >Web3</span
+            >
+            <span
+              class="px-2 py-1 bg-cyan-400/10 border border-cyan-400/30 rounded text-[9px] font-bold text-cyan-400 tracking-widest uppercase"
+              >Solidity</span
+            >
+          </div>
+        </div>
+        <h4 class="text-2xl font-bold text-white mb-2">CryptoFlow Tracker</h4>
+        <p class="text-white/70 text-sm mb-6">
+          Advanced blockchain analytics for DeFi yield farming across multiple
+          chains.
+        </p>
+        <button
+          class="w-full bg-white/10 backdrop-blur-md text-white py-3 rounded-lg font-bold border border-white/10 hover:bg-cyan-400 hover:text-neutral-950 transition-all"
+        >
+          View Project
+        </button>
+      </div>
+    </div>
+    <!-- Wide Card 4 -->
+    <div
+      class="col-span-12 lg:col-span-8 row-span-1 group relative rounded-xl overflow-hidden border border-white/10 cyan-glow"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+        data-alt="Minimalist SaaS landing page with clean typography and geometric shapes"
+        style='
+                background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhLN5SpzoMM9pkZWESvYp6sWwLNuSReXnFlGnnMvPpi27QHKBdyKb6q2kQATUCAXBfchu-6LMed-GMJmP6QeElL8EdZdUMGTEsj72UMNTmaXrkl79ED1zvLmnrLmtzSYfNKKpK5HODOlTbjAOB6ctAtquGm2ywMTu0RJ3vwe6BgvjbiQCy9Sbn-4jRhtj78Nc_ZhepmK0vuJs3HvEg78CTRqYu_hUK_HBLcbTJzi0HfhcBm-CTDY8MZnEMHeXkJb8ytlvH8FwY164");
+              '
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-neutral-950/80 to-transparent p-8 flex flex-col justify-center"
+      >
+        <div class="max-w-md">
+          <span
+            class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-2 block"
+            >Marketing Design</span
+          >
+          <h4 class="text-2xl font-bold text-white mb-2">
+            CloudOps Landing Page
+          </h4>
+          <p class="text-white/60 text-sm mb-4">
+            A high-conversion landing page designed for an enterprise cloud
+            management startup.
+          </p>
+          <div class="flex gap-3">
+            <span class="material-symbols-outlined text-cyan-400">speed</span>
+            <span class="material-symbols-outlined text-cyan-400">search</span>
+            <span class="material-symbols-outlined text-cyan-400">devices</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Small Grid Items -->
+    <div
+      class="col-span-12 md:col-span-4 lg:col-span-4 row-span-1 group relative rounded-xl overflow-hidden border border-white/10 cyan-glow"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center"
+        data-alt="Technical illustration of a REST API structure"
+        style='
+                background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDnBO7ZO00bp_HvYUadnWD475cHY-CEhHSjcmadnYzWxOUpPBB2Zo9Ke6NINZCvWhbWxBCCGlhOUFHycAGBd-8BvzXiXt7yU28eRTYQ3QD-x8kohHa1omOb0TmPkyvWd4pQSE1bPjSjtuwPSKKy6MxhtYY83daw3WvIBeurkHqyYJ6wz2uXjFMoWvecXueyEB8qHixg52vqMpfQ8rUq9EjZIRT31IJ10Bi-zAnB4jYQoYYTTY7pY3_eVbHjguqm9VfO5Cj0LyDm2BQ");
+              '
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-neutral-950/80 backdrop-blur-[2px] p-6 flex flex-col justify-between"
+      >
+        <div
+          class="size-10 bg-cyan-400/20 rounded-lg flex items-center justify-center border border-cyan-400/40"
+        >
+          <span class="material-symbols-outlined text-cyan-400">api</span>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold text-white">Core API Engine</h4>
+          <p class="text-white/50 text-xs">
+            Rust-based high-throughput microservice.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-span-12 md:col-span-4 lg:col-span-4 row-span-1 group relative rounded-xl overflow-hidden border border-white/10 cyan-glow"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center"
+        data-alt="Abstract security shield icon with cyan digital patterns"
+        style='
+                background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9PLUHxbUlAo3exM5JL03tsA5jgx5b0et-CR0iNbrcFZo-etOEH9ksp6QE5aTrl3iDsCREp_XUeV1VuDyB12KcjiTnzYkSxfVrNRkpCvlUr3I9RVxyTX4WRtptBNPa0lzpKVYa6-EslE5MOw2IdPUXQsD9jW2N49L__DKiQjKjq2tpjMAcBLJ1QWALCuTT1x5Loqcetz4o8iyPeknzduXMS2kDbCiUoWbk_tbNoFfb_b4vXRTyKDfQfni3ddEBqegElqI13p-VqIo");
+              '
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-neutral-950/80 backdrop-blur-[2px] p-6 flex flex-col justify-between"
+      >
+        <div
+          class="size-10 bg-cyan-400/20 rounded-lg flex items-center justify-center border border-cyan-400/40"
+        >
+          <span class="material-symbols-outlined text-cyan-400">security</span>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold text-white">Auth Shield</h4>
+          <p class="text-white/50 text-xs">
+            Custom RBAC authentication library.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Call to Action Tile -->
+    <div
+      class="col-span-12 md:col-span-4 lg:col-span-4 row-span-1 bg-cyan-400 rounded-xl flex flex-col items-center justify-center p-8 text-center group cursor-pointer hover:shadow-[0_0_30px_rgba(13,242,242,0.3)] transition-all"
+    >
+      <div
+        class="size-14 bg-neutral-950 rounded-full flex items-center justify-center mb-4 text-cyan-400 group-hover:scale-110 transition-transform"
+      >
+        <span class="material-symbols-outlined text-3xl">add</span>
+      </div>
+      <h4 class="text-xl font-black text-neutral-950 mb-1">
+        Your Project Here
+      </h4>
+      <p class="text-neutral-950/70 text-sm font-medium">
+        Have an idea? Let's bring it to life.
+      </p>
+    </div>
+  </div>
+  <!-- Chips Component - Skill Categories -->
+  <div class="mt-20 flex flex-col items-center">
+    <p class="text-sm font-bold text-cyan-400 tracking-widest uppercase mb-6">
+      Expertise Stack
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <div
+        class="flex h-10 items-center justify-center gap-x-2 rounded-full border border-white/10 bg-white/5 px-6 hover:bg-white/10 transition-colors cursor-default"
+      >
+        <span class="text-white text-sm font-medium">Next.js 14</span>
+      </div>
+      <div
+        class="flex h-10 items-center justify-center gap-x-2 rounded-full border border-white/10 bg-white/5 px-6 hover:bg-white/10 transition-colors cursor-default"
+      >
+        <span class="text-white text-sm font-medium">TypeScript</span>
+      </div>
+      <div
+        class="flex h-10 items-center justify-center gap-x-2 rounded-full border border-white/10 bg-white/5 px-6 hover:bg-white/10 transition-colors cursor-default"
+      >
+        <span class="text-white text-sm font-medium">Tailwind CSS</span>
+      </div>
+      <div
+        class="flex h-10 items-center justify-center gap-x-2 rounded-full border border-white/10 bg-white/5 px-6 hover:bg-white/10 transition-colors cursor-default"
+      >
+        <span class="text-white text-sm font-medium">Node.js</span>
+      </div>
+      <div
+        class="flex h-10 items-center justify-center gap-x-2 rounded-full border border-white/10 bg-white/5 px-6 hover:bg-white/10 transition-colors cursor-default"
+      >
+        <span class="text-white text-sm font-medium">GraphQL</span>
+      </div>
+      <div
+        class="flex h-10 items-center justify-center gap-x-2 rounded-full border border-white/10 bg-white/5 px-6 hover:bg-white/10 transition-colors cursor-default"
+      >
+        <span class="text-white text-sm font-medium">PostgreSQL</span>
+      </div>
+      <div
+        class="flex h-10 items-center justify-center gap-x-2 rounded-full border border-white/10 bg-white/5 px-6 hover:bg-white/10 transition-colors cursor-default"
+      >
+        <span class="text-white text-sm font-medium">Docker</span>
+      </div>
+      <div
+        class="flex h-10 items-center justify-center gap-x-2 rounded-full border border-white/10 bg-white/5 px-6 hover:bg-white/10 transition-colors cursor-default"
+      >
+        <span class="text-white text-sm font-medium">AWS</span>
+      </div>
+    </div>
+  </div>
+</Layout>

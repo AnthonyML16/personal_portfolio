@@ -1,0 +1,46 @@
+---
+import { Image } from "astro:assets";
+import logo from "../images/isotipo_black.svg";
+import Link from "./link/menu.astro";
+import ButtonPrimary from "./link/button-primary.astro";
+
+const navItems = [
+  { href: "/", label: "Inicio" },
+  { href: "/projects", label: "Proyectos" },
+  { href: "/experience", label: "Experiencia" },
+  { href: "/blog", label: "Blog" },
+  { href: "/skills", label: "Habilidades" },
+  { href: "/contact", label: "Contacto" },
+];
+---
+
+<nav class="fixed top-0 w-full z-50 p-4">
+  <div
+    class="max-w-7xl mx-auto flex items-center justify-between glass rounded-xl px-4 py-3 border border-teal-950/30"
+  >
+    <a href="/" class="flex items-center gap-2">
+      <div
+        class="size-8 bg-primary rounded flex items-center justify-center hover:brightness-110 transition-all duration-300"
+      >
+        <Image src={logo} alt="Logo Anthony" class="p-2" />
+      </div>
+      <h1
+        class="relative inline-block text-lg font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary bg-[length:0%_100%] bg-no-repeat hover:bg-[length:100%_100%] transition-[background-size] duration-700 ease-in-out"
+      >
+        <span
+          class="text-white hover:text-transparent transition-colors duration-500"
+        >
+          Anthony
+        </span>
+      </h1>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      {navItems.map((item) => <Link href={item.href} label={item.label} />)}
+    </div>
+    <ButtonPrimary
+      href="/contact"
+      label="Contáctame"
+      class="px-5! py-2! rounded-full!"
+    />
+  </div>
+</nav>

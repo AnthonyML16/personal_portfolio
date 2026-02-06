@@ -1,17 +1,193 @@
 ---
-
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/card/main.astro";
+import SubCard from "../components/card/sub.astro";
+import GitHubCard from "../components/card/github.astro";
+import Icon from "../components/icon.astro";
+import TagPulse from "../components/tag/pulse.astro";
+import ImageProfile from "../images/profile.webp";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <di class="grid grid-cols-1 md:grid-cols-12 gap-6">
+    <!-- Hero Tile -->
+    <Card
+      class="md:col-span-8 md:row-span-2 p-8 relative overflow-hidden flex flex-col justify-end min-h-[400px]"
+    >
+      <div class="absolute inset-0 cyan-radial pointer-events-none"></div>
+      <div class="absolute top-8 right-8">
+        <TagPulse label="Disponible para proyectos" />
+      </div>
+      <div
+        class="relative z-10 flex flex-col md:flex-row gap-8 items-end md:items-center"
+      >
+        <div
+          class="size-32 md:size-40 rounded-2xl bg-cover bg-center border-2 border-primary/20 overflow-hidden"
+        >
+          <Image
+            src={ImageProfile}
+            alt="Anthony Meza profile picture"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <p class="text-primary font-medium mb-2">Hola, Soy</p>
+          <h2
+            class="text-5xl md:text-6xl font-extrabold text-white tracking-tighter mb-4"
+          >
+            Anthony
+          </h2>
+          <p class="text-slate-400 text-lg max-w-md">
+            Full Stack Developer dedicado a crear experiencias digitales de alto
+            rendimiento.
+          </p>
+        </div>
+      </div>
+    </Card>
+
+    <!-- Tech Stack -->
+    <Card class="md:col-span-4 flex flex-col justify-between">
+      <h3
+        class="text-white/60 text-sm font-semibold uppercase tracking-widest mb-6"
+      >
+        Stack Tecnológico
+      </h3>
+      <div class="grid grid-cols-2 gap-4">
+        <SubCard>
+          <Icon icon="terminal" />
+          <span class="text-white font-bold">PHP</span>
+        </SubCard>
+        <SubCard>
+          <Icon icon="terminal" />
+          <span class="text-white font-bold">Laravel</span>
+        </SubCard>
+        <SubCard>
+          <Icon icon="database" />
+          <span class="text-white font-bold">MySQL</span>
+        </SubCard>
+        <SubCard>
+          <Icon icon="swatch" />
+          <span class="text-white font-bold">Tailwind</span>
+        </SubCard>
+      </div>
+    </Card>
+
+    <!-- GitHub Activity -->
+    <GitHubCard/>
+
+    <!-- Featured Project Tile (Wide) -->
+    <Card class="md:col-span-9 overflow-hidden group p-0!">
+      <div class="grid md:grid-cols-2 h-full">
+        <div class="p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <span
+                class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded-full"
+                >New Release</span
+              >
+              <span class="text-white/40 text-xs font-medium"
+                >Fintech Dashboard</span
+              >
+            </div>
+            <h3 class="text-3xl font-bold text-white mb-4">
+              Glassmorphic Admin UI
+            </h3>
+            <p class="text-slate-400 mb-6">
+              A high-performance financial management interface built with
+              Next.js, Framer Motion, and D3.js for complex data visualization.
+            </p>
+          </div>
+          <div class="flex gap-4">
+            <button
+              class="bg-primary text-neutral-950 px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 group/btn"
+            >
+              View Case Study
+              <span
+                class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform"
+                >arrow_forward</span
+              >
+            </button>
+            <button
+              class="px-6 py-3 rounded-xl font-bold text-sm text-white border border-white/10 hover:bg-white/5 transition-colors"
+            >
+              Source Code
+            </button>
+          </div>
+        </div>
+        <div
+          class="bg-cover bg-center min-h-[300px] border-l border-white/10 relative"
+          data-alt="Modern glassmorphism dashboard UI with dark theme and cyan accents"
+          style='
+                background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAcXLuuMIiquypS4jfoZ2f8f_rJxJiMkE5_DTw8b1umardjg7ZWdDGwk-r7Ew3tzs3PDhUBbg01i34W3KfL2vNkp71TYPlwpryzDAO-qmDhQJQQoC0yT6gmGsvOhI1leD2UdDPY5EJcTHOARttHaHmqyKzQawTM8qMiOax436ZUXTwqIhqR7YOyW7OW_pLfubkUKHYnCgIsLqgKo5ox8UO1FaFKRCf4dvyj3hCWUX-VffiWz2fkaIeTZs69D2nsvqKmok7hHU9MRHA");
+              '
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-neutral-950/80 via-transparent to-transparent md:hidden"
+          >
+          </div>
+        </div>
+      </div>
+    </Card>
+    <!-- Contact/Social Tile -->
+    <Card class="md:col-span-3 flex flex-col justify-between">
+      <div>
+        <h3
+          class="text-white/60 text-sm font-semibold uppercase tracking-widest mb-6"
+        >
+          Let's Connect
+        </h3>
+        <div class="space-y-4">
+          <a
+            class="flex items-center gap-4 text-white hover:text-primary transition-colors group"
+            href="#"
+          >
+            <div
+              class="size-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/50 transition-all"
+            >
+              <span class="material-symbols-outlined text-xl"
+                >alternate_email</span
+              >
+            </div>
+            <span class="font-medium">Email Me</span>
+          </a>
+          <a
+            class="flex items-center gap-4 text-white hover:text-primary transition-colors group"
+            href="#"
+          >
+            <div
+              class="size-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/50 transition-all"
+            >
+              <span class="material-symbols-outlined text-xl">link</span>
+            </div>
+            <span class="font-medium">LinkedIn</span>
+          </a>
+          <a
+            class="flex items-center gap-4 text-white hover:text-primary transition-colors group"
+            href="#"
+          >
+            <div
+              class="size-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/50 transition-all"
+            >
+              <span class="material-symbols-outlined text-xl">code</span>
+            </div>
+            <span class="font-medium">GitHub</span>
+          </a>
+        </div>
+      </div>
+      <div class="mt-8 pt-6 border-t border-white/10">
+        <p class="text-slate-500 text-xs">Based in San Francisco, CA</p>
+        <p class="text-white text-sm font-semibold mt-1">Open to remote work</p>
+      </div>
+    </Card>
+  </di>
+  <!-- Decorative background elements -->
+  <div
+    class="fixed top-1/4 -left-20 size-[500px] bg-j/5 blur-[120px] rounded-full -z-10"
+  >
+  </div>
+  <div
+    class="fixed bottom-1/4 -right-20 size-[400px] bg-primary/10 blur-[100px] rounded-full -z-10"
+  >
+  </div>
+</Layout>

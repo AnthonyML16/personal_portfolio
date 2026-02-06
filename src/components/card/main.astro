@@ -1,0 +1,11 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {}
+
+const { class: className, ...props } = Astro.props;
+---
+
+<div class:list={["glass bento-card rounded-2xl p-6", className]} {...props}>
+  <slot />
+</div>
