@@ -1,9 +1,19 @@
 ---
-const { name } = Astro.props;
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"span"> {
+  name: string;
+}
+
+const { name, class: className, ...rest } = Astro.props;
 ---
 
 <span
-  class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-xs font-medium text-slate-300 hover:border-primary/10 hover:text-primary transition-colors duration-300"
+  class:list={[
+    "px-3 py-1.5 bg-white/5 border border-white/10 rounded text-xs font-medium text-slate-300 hover:border-primary/10 hover:text-primary transition-colors duration-300",
+    className,
+  ]}
+  {...rest}
 >
   {name}
 </span>

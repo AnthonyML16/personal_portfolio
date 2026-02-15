@@ -49,10 +49,17 @@ const imagePath = `/src/images/projects/${img}`;
   </div>
 
   <div
-    class={`absolute inset-0 ${back ? "bg-gradient-to-t" : "bg-gradient-to-r"} from-black/90 to-transparent p-6 flex flex-col justify-end`}
+    class={`absolute inset-0 ${back ? "bg-gradient-to-t" : "bg-gradient-to-r"} from-black/95 via-black/40 to-transparent p-6 flex flex-col justify-end`}
   >
-    <div class="flex gap-2 mb-3">
-      {stack.map((stack) => <Technical name={stack} />)}
+    <div class="flex gap-2 mb-3 flex-wrap">
+      {
+        stack.map((stack) => (
+          <Technical
+            name={stack}
+            class="text-primary! border-primary! hover:bg-primary/20"
+          />
+        ))
+      }
     </div>
 
     <h3

@@ -11,7 +11,7 @@
 
 body {
     background-image: radial-gradient(circle at 2px 2px,
-            rgba(13, 242, 242, 0.05) 1px,
+            rgba(13, 242, 242, 0.2) 1px,
             transparent 0);
     background-size: 32px 32px;
 }
