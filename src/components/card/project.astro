@@ -44,12 +44,8 @@ const imagePath = `/src/images/projects/${img}`;
     <Image
       src={images[imagePath]()}
       alt={title}
-      class="w-full h-full object-cover"
+      class="w-full h-full object-cover opacity-50 group-hover:opacity-75 transition-opacity duration-300"
     />
-    <div
-      class="absolute inset-0 bg-black/75 group-hover:bg-black/60 transition-colors duration-300"
-    >
-    </div>
   </div>
 
   <div
