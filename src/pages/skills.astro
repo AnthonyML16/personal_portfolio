@@ -1,321 +1,114 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import TitlePage from "../components/title/page.astro";
+import Card from "../components/card/main.astro";
+import TitleCard from "../components/title/card.astro";
+import SkillPercentaje from "../components/block/skill-percentaje.astro";
+import TagMain from "../components/tag/main.astro";
+import Icon from "../components/icon.astro";
+import Technical from "../components/card/technical-second.astro";
+import LabelCheck from "../components/block/label-check.astro";
+import { getCollection } from "astro:content";
 
-const skillCategories = [
-  {
-    title: "Frontend",
-    skills: [
-      "React",
-      "Astro",
-      "TypeScript",
-      "Tailwind CSS",
-      "Next.js",
-      "Vue.js",
-    ],
-  },
-  {
-    title: "Backend",
-    skills: ["Node.js", "Python", "PostgreSQL", "GraphQL", "Redis", "Docker"],
-  },
-  {
-    title: "Tools & Others",
-    skills: ["Git", "Figma", "AWS", "CI/CD", "Jest", "Agile"],
-  },
-];
+const skills = await getCollection("skills");
+
+const core = skills.filter((skill) => skill.data.category === "core");
+const backend = skills.filter((skill) => skill.data.category === "backend");
+const design = skills.filter((skill) => skill.data.category === "design");
+const tools = skills.filter((skill) => skill.data.category === "tool");
+
+export const prerender = true;
 ---
 
 <Layout title="Skills | Anthony's Portfolio">
-  <div class="mb-12">
-    <div
-      class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 mb-4"
-    >
-      <span class="size-2 rounded-full bg-cyan-400 animate-pulse"></span>
-      <span class="text-xs font-bold text-cyan-400 tracking-widest uppercase"
-        >Expertise</span
-      >
-    </div>
-    <h2 class="text-5xl md:text-6xl font-black tracking-tight mb-4">
-      Skills &amp; <span class="text-cyan-400">Capabilities</span>
-    </h2>
-    <p
-      class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl leading-relaxed"
-    >
-      A technical deep-dive into my stack. I specialize in building
-      high-performance applications with a focus on modern web standards and
-      architectural excellence.
-    </p>
-  </div>
+  <TitlePage
+    pulse="Conocimientos"
+    title="Habilidades &"
+    colorTitle="Capacidades"
+    description="Un análisis de mis capacidades técnicas actuales, desde la planificación hasta la implementación completa, siempre en constante aprendizaje."
+  />
+
   <div class="grid grid-cols-12 gap-6 auto-rows-[minmax(200px,auto)]">
-    <div
-      class="col-span-12 lg:col-span-8 bento-card-skills flex flex-col justify-between"
-    >
-      <div>
-        <div class="flex items-center gap-3 mb-6">
-          <span class="material-symbols-outlined text-cyan-400">layers</span>
-          <h3 class="text-2xl font-bold">Core Technologies</h3>
-        </div>
-        <div class="grid md:grid-cols-2 gap-x-12 gap-y-6">
-          <div class="space-y-4">
-            <div>
-              <div class="flex justify-between text-sm mb-2">
-                <span class="font-bold">Next.js &amp; React</span>
-                <span class="text-cyan-400">95%</span>
-              </div>
-              <div
-                class="h-2 bg-white/5 rounded-full overflow-hidden border border-white/10"
-              >
-                <div class="h-full bg-cyan-400 w-[95%]"></div>
-              </div>
-            </div>
-            <div>
-              <div class="flex justify-between text-sm mb-2">
-                <span class="font-bold">TypeScript</span>
-                <span class="text-cyan-400">90%</span>
-              </div>
-              <div
-                class="h-2 bg-white/5 rounded-full overflow-hidden border border-white/10"
-              >
-                <div
-                  class="h-full bg-cyan-400 w-[90%] shadow-[0_0_10px_rgba(13,242,242,0.4)]"
-                >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="space-y-4">
-            <div>
-              <div class="flex justify-between text-sm mb-2">
-                <span class="font-bold">Tailwind CSS</span>
-                <span class="text-cyan-400">98%</span>
-              </div>
-              <div
-                class="h-2 bg-white/5 rounded-full overflow-hidden border border-white/10"
-              >
-                <div
-                  class="h-full bg-cyan-400 w-[98%] shadow-[0_0_10px_rgba(13,242,242,0.4)]"
-                >
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="flex justify-between text-sm mb-2">
-                <span class="font-bold">Node.js</span>
-                <span class="text-cyan-400">85%</span>
-              </div>
-              <div
-                class="h-2 bg-white/5 rounded-full overflow-hidden border border-white/10"
-              >
-                <div
-                  class="h-full bg-cyan-400 w-[85%] shadow-[0_0_10px_rgba(13,242,242,0.4)]"
-                >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <Card class="col-span-12 lg:col-span-8">
+      <TitleCard icon="layers" title="Tecnologías principales" />
+      <div class="grid md:grid-cols-2 gap-x-12 gap-y-6">
+        {
+          core.map((skill) => {
+            const { data } = skill;
+            const { name, percentage } = data;
+
+            return (
+              <SkillPercentaje
+                skill={name}
+                percentage={percentage ? percentage : 0}
+              />
+            );
+          })
+        }
       </div>
       <p class="text-sm text-slate-500 mt-8">
-        Extensive experience in production-grade full-stack development since
-        2019.
+        Amplia experiencia en desarrollo full-stack.
       </p>
-    </div>
-    <div
-      class="col-span-12 md:col-span-4 bento-card-skills flex flex-col justify-between bg-cyan-400/5 border-cyan-400/20"
-    >
+    </Card>
+
+    <Card class="col-span-12 md:col-span-4 flex flex-col justify-between">
       <div class="flex items-center justify-between mb-4">
-        <span
-          class="text-[10px] font-black text-cyan-400 uppercase tracking-widest px-2 py-1 bg-cyan-400/10 rounded"
-          >On the Radar</span
-        >
-        <span class="material-symbols-outlined text-cyan-400">auto_awesome</span
-        >
+        <TagMain label="En el radar" />
+        <Icon icon="sparkles-alt" />
       </div>
       <div>
-        <h4 class="text-xl font-bold mb-2">Learning Now</h4>
+        <h4 class="text-xl font-bold mb-2">Aprendizaje ahora</h4>
         <p class="text-slate-400 text-sm mb-4">
-          Diving deep into AI integration and Vector Databases for intelligent
-          agents.
+          Profundizando en la integración y desarrollo de IA.
         </p>
-        <div class="flex items-center gap-2 text-cyan-400 font-bold">
-          <span class="text-sm uppercase tracking-tighter"
-            >LangChain + Pinecone</span
-          >
+        <div class="flex items-center gap-2 text-primary font-bold">
+          <span class="text-sm uppercase tracking-tighter">
+            Python + Gemini + GPT
+          </span>
         </div>
       </div>
-    </div>
-    <div class="col-span-12 md:col-span-6 lg:col-span-4 bento-card-skills">
-      <div class="flex items-center gap-3 mb-6">
-        <span class="material-symbols-outlined text-cyan-400">database</span>
-        <h3 class="text-xl font-bold">Backend Tools</h3>
-      </div>
+    </Card>
+
+    <Card class="col-span-12 md:col-span-6 lg:col-span-4">
+      <TitleCard icon="database" title="Backend" />
       <div class="flex flex-wrap gap-2">
-        <span
-          class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-xs font-medium text-slate-300"
-          >PostgreSQL</span
-        >
-        <span
-          class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-xs font-medium text-slate-300"
-          >GraphQL</span
-        >
-        <span
-          class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-xs font-medium text-slate-300"
-          >Prisma</span
-        >
-        <span
-          class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-xs font-medium text-slate-300"
-          >Docker</span
-        >
-        <span
-          class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-xs font-medium text-slate-300"
-          >Redis</span
-        >
-        <span
-          class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-xs font-medium text-slate-300"
-          >AWS S3</span
-        >
-        <span
-          class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-xs font-medium text-slate-300"
-          >Express</span
-        >
-        <span
-          class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-xs font-medium text-slate-300"
-          >tRPC</span
-        >
+        {
+          backend.map((skill) => {
+            const { data } = skill;
+            const { name } = data;
+
+            return <Technical name={name} />;
+          })
+        }
       </div>
-    </div>
-    <div class="col-span-12 md:col-span-6 lg:col-span-4 bento-card-skills">
-      <div class="flex items-center gap-3 mb-6">
-        <span class="material-symbols-outlined text-cyan-400">palette</span>
-        <h3 class="text-xl font-bold">Design &amp; UX</h3>
-      </div>
+    </Card>
+
+    <Card class="col-span-12 md:col-span-6 lg:col-span-4">
+      <TitleCard icon="palette" title="Diseño" />
       <div class="space-y-4">
-        <div class="flex items-center justify-between group">
-          <span
-            class="text-sm text-slate-400 group-hover:text-white transition-colors"
-            >Figma Design System</span
-          >
-          <span class="material-symbols-outlined text-cyan-400 text-sm"
-            >check_circle</span
-          >
-        </div>
-        <div class="flex items-center justify-between group">
-          <span
-            class="text-sm text-slate-400 group-hover:text-white transition-colors"
-            >Framer Motion</span
-          >
-          <span class="material-symbols-outlined text-cyan-400 text-sm"
-            >check_circle</span
-          >
-        </div>
-        <div class="flex items-center justify-between group">
-          <span
-            class="text-sm text-slate-400 group-hover:text-white transition-colors"
-            >Responsive Prototyping</span
-          >
-          <span class="material-symbols-outlined text-cyan-400 text-sm"
-            >check_circle</span
-          >
-        </div>
-        <div class="flex items-center justify-between group">
-          <span
-            class="text-sm text-slate-400 group-hover:text-white transition-colors"
-            >Accessibility (A11y)</span
-          >
-          <span class="material-symbols-outlined text-cyan-400 text-sm"
-            >check_circle</span
-          >
-        </div>
-      </div>
-    </div>
-    <div
-      class="col-span-12 md:col-span-12 lg:col-span-4 bento-card-skills flex flex-col justify-between"
-    >
-      <div>
-        <div class="flex items-center gap-3 mb-6">
-          <span class="material-symbols-outlined text-cyan-400">groups</span>
-          <h3 class="text-xl font-bold">Soft Skills</h3>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="p-3 bg-white/5 rounded border border-white/5">
-            <h5 class="text-cyan-400 text-[10px] font-black uppercase mb-1">
-              Leadership
-            </h5>
-            <p class="text-xs text-slate-400">Team Mentoring</p>
-          </div>
-          <div class="p-3 bg-white/5 rounded border border-white/5">
-            <h5 class="text-cyan-400 text-[10px] font-black uppercase mb-1">
-              Workflow
-            </h5>
-            <p class="text-xs text-slate-400">Agile &amp; Scrum</p>
-          </div>
-          <div class="p-3 bg-white/5 rounded border border-white/5">
-            <h5 class="text-cyan-400 text-[10px] font-black uppercase mb-1">
-              Mindset
-            </h5>
-            <p class="text-xs text-slate-400">Problem Solver</p>
-          </div>
-          <div class="p-3 bg-white/5 rounded border border-white/5">
-            <h5 class="text-cyan-400 text-[10px] font-black uppercase mb-1">
-              Communication
-            </h5>
-            <p class="text-xs text-slate-400">Remote Expert</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="mt-20 text-center">
-    <p class="text-sm font-bold text-cyan-400 tracking-widest uppercase mb-8">
-      Trusted by Modern Teams
-    </p>
-    <div class="flex flex-wrap justify-center gap-12 opacity-40 grayscale">
-      <div class="flex items-center gap-2 font-black text-2xl tracking-tighter">
-        PROJECT_ALPHA
-      </div>
-      <div class="flex items-center gap-2 font-black text-2xl tracking-tighter">
-        NEXUS_CORE
-      </div>
-      <div class="flex items-center gap-2 font-black text-2xl tracking-tighter">
-        FLOW_SYSTEMS
-      </div>
-      <div class="flex items-center gap-2 font-black text-2xl tracking-tighter">
-        ZENITH_LABS
-      </div>
-    </div>
-  </div>
-  <!-- <section class="py-10">
-    <h1 class="text-4xl font-bold mb-16 text-center">
-      Technical <span class="text-indigo-400">Skills</span>
-    </h1>
+        {
+          design.map((skill) => {
+            const { data } = skill;
+            const { name } = data;
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {
-        skillCategories.map((category) => (
-          <div class="bg-slate-900/50 rounded-2xl p-8 border border-slate-800 backdrop-blur-sm hover:bg-slate-900/80 transition-colors">
-            <h3 class="text-xl font-bold mb-6 text-indigo-300 border-b border-indigo-500/20 pb-2">
-              {category.title}
-            </h3>
-            <div class="flex flex-wrap gap-3">
-              {category.skills.map((skill) => (
-                <span class="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 text-sm font-medium border border-slate-700 hover:border-indigo-500/50 hover:text-indigo-300 hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-default">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))
-      }
-    </div>
+            return <LabelCheck name={name} />;
+          })
+        }
+      </div>
+    </Card>
 
-    <div
-      class="mt-20 p-8 rounded-2xl bg-gradient-to-r from-indigo-900/20 to-cyan-900/20 border border-indigo-500/10 text-center"
-    >
-      <h3 class="text-2xl font-bold mb-4 text-white">Always Learning</h3>
-      <p class="text-slate-400 max-w-2xl mx-auto">
-        I'm constantly exploring new technologies and frameworks to stay at the
-        forefront of web development. Currently diving deep into AI integration
-        and WebAssembly.
-      </p>
-    </div>
-  </section> -->
+    <Card class="col-span-12 md:col-span-12 lg:col-span-4">
+      <TitleCard icon="code-alt" title="Otros" />
+      <div class="flex flex-wrap gap-2">
+        {
+          tools.map((skill) => {
+            const { data } = skill;
+            const { name } = data;
+
+            return <Technical name={name} />;
+          })
+        }
+      </div>
+    </Card>
+  </div>
 </Layout>

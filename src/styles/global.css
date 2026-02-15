@@ -17,7 +17,7 @@ body {
 }
 
 .glass {
-    @apply bg-neutral-950/50 backdrop-blur-md border border-primary/10;
+    @apply bg-neutral-900/50 backdrop-blur-md border border-primary/10;
 }
 
 

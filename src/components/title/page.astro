@@ -1,0 +1,29 @@
+---
+import TagPulse from "../tag/pulse.astro";
+
+interface Props {
+  pulse: string;
+  title: string;
+  description?: string;
+  colorTitle?: string;
+}
+
+const { pulse, title, colorTitle, description } = Astro.props;
+---
+
+<div class="mb-12">
+  <TagPulse label={pulse} />
+
+  <h2 class="text-5xl md:text-6xl font-black tracking-tight my-4">
+    {title}
+    {colorTitle && <span class="text-primary">{colorTitle}</span>}
+  </h2>
+
+  {
+    description && (
+      <p class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl leading-relaxed">
+        {description}
+      </p>
+    )
+  }
+</div>

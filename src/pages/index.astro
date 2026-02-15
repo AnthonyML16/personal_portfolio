@@ -2,15 +2,48 @@
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/card/main.astro";
-import SubCard from "../components/card/sub.astro";
-import GitHubCard from "../components/card/github.astro";
+import SubCard from "../components/card/stack-index.astro";
 import Icon from "../components/icon.astro";
 import TagPulse from "../components/tag/pulse.astro";
+import TagMain from "../components/tag/main.astro";
+import ButtonPrimary from "../components/button/primary.astro";
+import ButtonSecond from "../components/button/second.astro";
+import ButtonThird from "../components/button/third.astro";
+import { getCollection } from "astro:content";
+
 import ImageProfile from "../images/profile.webp";
+
+import { getGitHubMetrics } from "../services/github";
+
+const USERNAME = import.meta.env.GITHUB_USERNAME;
+const { total, columns } = await getGitHubMetrics(USERNAME);
+const projects = await getCollection("projects");
+
+const getColorClass = (count: number) => {
+  if (count === 0) return "bg-primary/10";
+  if (count < 3) return "bg-primary/30";
+  if (count < 6) return "bg-primary/60";
+  return "bg-primary/90";
+};
+
+const sortProject = projects.sort((a, b) => {
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+
+const project = sortProject[0];
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/images/projects/*.webp",
+);
+const imagePath = `/src/images/projects/${project.data.img}`;
+
+if (!images[imagePath])
+  throw new Error(`"${imagePath}" no existe en "src/images/projects/"`);
+
+export const prerender = true;
 ---
 
 <Layout>
-  <di class="grid grid-cols-1 md:grid-cols-12 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
     <!-- Hero Tile -->
     <Card
       class="md:col-span-8 md:row-span-2 p-8 relative overflow-hidden flex flex-col justify-end min-h-[400px]"
@@ -39,8 +72,8 @@ import ImageProfile from "../images/profile.webp";
             Anthony
           </h2>
           <p class="text-slate-400 text-lg max-w-md">
-            Full Stack Developer dedicado a crear experiencias digitales de alto
-            rendimiento.
+            Full Stack Developer de 22 años dedicado a crear experiencias
+            digitales especializadas.
           </p>
         </div>
       </div>
@@ -54,27 +87,62 @@ import ImageProfile from "../images/profile.webp";
         Stack Tecnológico
       </h3>
       <div class="grid grid-cols-2 gap-4">
-        <SubCard>
-          <Icon icon="terminal" />
-          <span class="text-white font-bold">PHP</span>
-        </SubCard>
-        <SubCard>
-          <Icon icon="terminal" />
-          <span class="text-white font-bold">Laravel</span>
-        </SubCard>
-        <SubCard>
-          <Icon icon="database" />
-          <span class="text-white font-bold">MySQL</span>
-        </SubCard>
-        <SubCard>
-          <Icon icon="swatch" />
-          <span class="text-white font-bold">Tailwind</span>
-        </SubCard>
+        <SubCard icon="terminal" label="PHP" />
+        <SubCard icon="terminal" label="Laravel" />
+        <SubCard icon="database" label="MySQL" />
+        <SubCard icon="swatch" label="Tailwind" />
       </div>
     </Card>
 
     <!-- GitHub Activity -->
-    <GitHubCard/>
+    <Card class="md:col-span-4 relative">
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <h3
+            class="text-white/60 text-sm font-semibold uppercase tracking-widest mb-1"
+          >
+            GitHub Activity
+          </h3>
+          <p class="text-2xl font-bold text-white tracking-tight">
+            {total.toLocaleString()}+ Commits
+          </p>
+        </div>
+        <Icon icon="chart-trend" />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <div class="flex gap-1 overflow-visible">
+          {
+            columns.map((col) => (
+              <div class="flex flex-col gap-1">
+                {col.map((day) => (
+                  <div class="relative group">
+                    {" "}
+                    <div
+                      class={`size-3 rounded-sm transition-all duration-300 ${getColorClass(day.contributionCount)} group-hover:ring-1 group-hover:ring-white/50`}
+                    />
+                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50">
+                      <div class="bg-slate-900/95 backdrop-blur-md text-white text-[10px] py-1 px-2 rounded border border-white/10 whitespace-nowrap shadow-xl">
+                        <span class="font-bold text-primary">
+                          {day.contributionCount} commits
+                        </span>
+                        <span class="text-white/60 ml-1">
+                          {day.formattedDate}
+                        </span>
+                      </div>
+                      <div class="w-2 h-2 bg-slate-900 border-r border-b border-white/10 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))
+          }
+        </div>
+        <p class="text-xs text-slate-500 mt-2">
+          Participación activa diaria en proyectos
+        </p>
+      </div>
+    </Card>
 
     <!-- Featured Project Tile (Wide) -->
     <Card class="md:col-span-9 overflow-hidden group p-0!">
@@ -82,46 +150,49 @@ import ImageProfile from "../images/profile.webp";
         <div class="p-8 flex flex-col justify-between">
           <div>
             <div class="flex items-center gap-2 mb-4">
-              <span
-                class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded-full"
-                >New Release</span
-              >
-              <span class="text-white/40 text-xs font-medium"
-                >Fintech Dashboard</span
-              >
+              <TagMain label="Último proyecto" />
+              <span class="text-white/40 text-xs font-medium">
+                {project.data.type}
+              </span>
             </div>
             <h3 class="text-3xl font-bold text-white mb-4">
-              Glassmorphic Admin UI
+              {project.data.title}
             </h3>
             <p class="text-slate-400 mb-6">
-              A high-performance financial management interface built with
-              Next.js, Framer Motion, and D3.js for complex data visualization.
+              {project.data.description}
             </p>
           </div>
           <div class="flex gap-4">
-            <button
-              class="bg-primary text-neutral-950 px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 group/btn"
-            >
-              View Case Study
-              <span
-                class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform"
-                >arrow_forward</span
-              >
-            </button>
-            <button
-              class="px-6 py-3 rounded-xl font-bold text-sm text-white border border-white/10 hover:bg-white/5 transition-colors"
-            >
-              Source Code
-            </button>
+            {
+              project.data.site && (
+                <a href={project.data.site} target="_blank">
+                  <ButtonPrimary class="group/btn">
+                    Visitar sitio
+                    <Icon
+                      icon="arrow-right-stroke"
+                      class="text-neutral-950! group-hover/btn:translate-x-1 transition-transform"
+                    />
+                  </ButtonPrimary>
+                </a>
+              )
+            }
+            {
+              project.data.repo && (
+                <a href={project.data.repo} target="_blank">
+                  <ButtonThird class="group/btn">
+                    Visitar Repositorio
+                  </ButtonThird>
+                </a>
+              )
+            }
           </div>
         </div>
-        <div
-          class="bg-cover bg-center min-h-[300px] border-l border-white/10 relative"
-          data-alt="Modern glassmorphism dashboard UI with dark theme and cyan accents"
-          style='
-                background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAcXLuuMIiquypS4jfoZ2f8f_rJxJiMkE5_DTw8b1umardjg7ZWdDGwk-r7Ew3tzs3PDhUBbg01i34W3KfL2vNkp71TYPlwpryzDAO-qmDhQJQQoC0yT6gmGsvOhI1leD2UdDPY5EJcTHOARttHaHmqyKzQawTM8qMiOax436ZUXTwqIhqR7YOyW7OW_pLfubkUKHYnCgIsLqgKo5ox8UO1FaFKRCf4dvyj3hCWUX-VffiWz2fkaIeTZs69D2nsvqKmok7hHU9MRHA");
-              '
-        >
+        <div class="min-h-[300px] border-l border-white/10 relative">
+          <Image
+            src={images[imagePath]()}
+            alt={`Image of ${project.data.title}`}
+            class="w-full h-full object-cover absolute inset-0"
+          />
           <div
             class="absolute inset-0 bg-gradient-to-r from-neutral-950/80 via-transparent to-transparent md:hidden"
           >
@@ -129,58 +200,62 @@ import ImageProfile from "../images/profile.webp";
         </div>
       </div>
     </Card>
+
     <!-- Contact/Social Tile -->
     <Card class="md:col-span-3 flex flex-col justify-between">
       <div>
         <h3
           class="text-white/60 text-sm font-semibold uppercase tracking-widest mb-6"
         >
-          Let's Connect
+          Conectémonos
         </h3>
         <div class="space-y-4">
           <a
             class="flex items-center gap-4 text-white hover:text-primary transition-colors group"
-            href="#"
+            href="mailto:luis.anthony.laml@gmail.com"
+            target="_blank"
           >
-            <div
-              class="size-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/50 transition-all"
+            <ButtonSecond
+              class="p-3! text-current! group-hover:border-primary/50"
             >
-              <span class="material-symbols-outlined text-xl"
-                >alternate_email</span
-              >
-            </div>
-            <span class="font-medium">Email Me</span>
+              <Icon icon="gmail" color="current" size="xs" pack="bxl" />
+            </ButtonSecond>
+            <span class="font-medium">Correo</span>
           </a>
           <a
             class="flex items-center gap-4 text-white hover:text-primary transition-colors group"
-            href="#"
+            href="https://www.linkedin.com/in/anthony-meza-106385213/"
+            target="_blank"
           >
-            <div
-              class="size-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/50 transition-all"
+            <ButtonSecond
+              class="p-3! text-current! group-hover:border-primary/50"
             >
-              <span class="material-symbols-outlined text-xl">link</span>
-            </div>
+              <Icon icon="linkedin" color="current" size="xs" pack="bxl" />
+            </ButtonSecond>
             <span class="font-medium">LinkedIn</span>
           </a>
           <a
             class="flex items-center gap-4 text-white hover:text-primary transition-colors group"
-            href="#"
+            href="https://github.com/AnthonyML16"
+            target="_blank"
           >
-            <div
-              class="size-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/50 transition-all"
+            <ButtonSecond
+              class="p-3! text-current! group-hover:border-primary/50"
             >
-              <span class="material-symbols-outlined text-xl">code</span>
-            </div>
+              <Icon icon="github" color="current" size="xs" pack="bxl" />
+            </ButtonSecond>
             <span class="font-medium">GitHub</span>
           </a>
         </div>
       </div>
       <div class="mt-8 pt-6 border-t border-white/10">
-        <p class="text-slate-500 text-xs">Based in San Francisco, CA</p>
-        <p class="text-white text-sm font-semibold mt-1">Open to remote work</p>
+        <p class="text-slate-500 text-xs">Ubicado en Lima, Perú</p>
+        <p class="text-white text-sm font-semibold mt-1">
+          Disponible para trabajo remoto
+        </p>
       </div>
     </Card>
-  </di>
+  </div>
   <!-- Decorative background elements -->
   <div
     class="fixed top-1/4 -left-20 size-[500px] bg-j/5 blur-[120px] rounded-full -z-10"

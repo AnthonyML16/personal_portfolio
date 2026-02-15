@@ -1,0 +1,97 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+import Card from "./main.astro";
+import Technical from "./technical-second.astro";
+import ButtonPrimary from "../button/primary.astro";
+import ButtonSecond from "../button/second.astro";
+import Icon from "../icon.astro";
+
+interface Props extends HTMLAttributes<"div"> {
+  title: string;
+  img: string;
+  stack: string[];
+  description: string;
+  site: string | null;
+  repo: string | null;
+  isFeatured: boolean;
+  back: boolean;
+}
+
+const {
+  title,
+  img,
+  stack,
+  description,
+  site,
+  repo,
+  isFeatured,
+  back,
+  ...rest
+} = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/images/projects/*.webp",
+);
+
+const imagePath = `/src/images/projects/${img}`;
+---
+
+<Card {...rest}>
+  <div
+    class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+  >
+    <Image
+      src={images[imagePath]()}
+      alt={title}
+      class="w-full h-full object-cover"
+    />
+    <div
+      class="absolute inset-0 bg-black/75 group-hover:bg-black/60 transition-colors duration-300"
+    >
+    </div>
+  </div>
+
+  <div
+    class={`absolute inset-0 ${back ? "bg-gradient-to-t" : "bg-gradient-to-r"} from-black/90 to-transparent p-6 flex flex-col justify-end`}
+  >
+    <div class="flex gap-2 mb-3">
+      {stack.map((stack) => <Technical name={stack} />)}
+    </div>
+
+    <h3
+      class={`${isFeatured ? "text-3xl" : "text-xl"} font-bold text-white mb-2 leading-tight group-hover:text-primary transition-colors duration-300`}
+    >
+      {title}
+    </h3>
+
+    <p
+      class={`text-white/60 line-clamp-2 text-balance ${isFeatured ? "text-base max-w-2xl" : "text-sm"}`}
+    >
+      {description}
+    </p>
+
+    <div class="flex gap-4 mt-4">
+      {
+        site && (
+          <a href={site} target="_blank">
+            <ButtonPrimary class="px-5! py-2!">
+              Visitar
+              <Icon icon="link" color="current" />
+            </ButtonPrimary>
+          </a>
+        )
+      }
+      {
+        repo && (
+          <a href={repo} target="_blank">
+            <ButtonSecond class="px-5! py-2!">
+              Código
+              <Icon icon="code" color="current" />
+            </ButtonSecond>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</Card>

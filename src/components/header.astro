@@ -1,14 +1,13 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../images/isotipo_black.svg";
-import Link from "./link/menu.astro";
-import ButtonPrimary from "./link/button-primary.astro";
+import Link from "./link-menu.astro";
+import ButtonPrimary from "./button/primary.astro";
 
 const navItems = [
   { href: "/", label: "Inicio" },
   { href: "/projects", label: "Proyectos" },
   { href: "/experience", label: "Experiencia" },
-  { href: "/blog", label: "Blog" },
   { href: "/skills", label: "Habilidades" },
   { href: "/contact", label: "Contacto" },
 ];
@@ -37,10 +36,10 @@ const navItems = [
     <div class="hidden md:flex items-center gap-8">
       {navItems.map((item) => <Link href={item.href} label={item.label} />)}
     </div>
-    <ButtonPrimary
-      href="/contact"
-      label="Contáctame"
-      class="px-5! py-2! rounded-full!"
-    />
+    <a href="/contact">
+      <ButtonPrimary class="px-5! py-2! rounded-full!">
+        Contáctame
+      </ButtonPrimary>
+    </a>
   </div>
 </nav>

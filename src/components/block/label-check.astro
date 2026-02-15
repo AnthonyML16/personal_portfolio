@@ -1,0 +1,13 @@
+---
+import Icon from "../icon.astro";
+const { name } = Astro.props;
+---
+
+<div class="flex items-center justify-between group">
+  <span
+    class="text-sm text-slate-400 group-hover:text-primary transition-colors duration-300"
+  >
+    {name}
+  </span>
+  <Icon icon="check-circle" size="xs" />
+</div>

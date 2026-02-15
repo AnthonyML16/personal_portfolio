@@ -1,191 +1,93 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
+import TitlePage from "../components/title/page.astro";
+import Icon from "../components/icon.astro";
+import ImageMap from "../images/map.webp";
 ---
 
 <Layout title="Contact | Anthony's Portfolio">
-  <div class="mb-12">
-    <div
-      class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-400 text-xs font-bold mb-4 uppercase tracking-wider"
-    >
-      <span class="relative flex h-2 w-2">
-        <span
-          class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"
-        ></span>
-        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"
-        ></span>
-      </span>
-      Available for Freelance
-    </div>
-    <h1
-      class="text-slate-900 dark:text-white text-5xl md:text-6xl font-black leading-tight tracking-tighter"
-    >
-      Let's build something <span class="text-cyan-400">amazing</span>.
-    </h1>
-    <p class="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mt-4">
-      Have a project in mind or just want to say hi? I'm always open to
-      discussing new opportunities and creative ideas.
-    </p>
-  </div>
-  <!-- Bento Grid Container -->
+  <TitlePage
+    pulse="Conectémonos"
+    title="Contacto"
+    description="¿Tienes un proyecto en mente o buscas fortalecer tu equipo? Estoy disponible para colaboraciones estratégicas y desarrollo de software de alto impacto."
+  />
+
   <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-    <!-- Main Contact Form Card -->
     <div
-      class="md:col-span-7 lg:col-span-8 bg-white dark:bg-[#1c2627] rounded-xl border border-slate-200 dark:border-[#3b5254] p-8 shadow-sm"
+      class="md:col-span-7 lg:col-span-8 relative overflow-hidden bg-white dark:bg-[#1c2627] rounded-xl border border-slate-200 dark:border-[#3b5254] p-8 shadow-sm h-full group"
     >
-      <form class="space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <label class="flex flex-col gap-2">
-            <span
-              class="text-slate-700 dark:text-white text-sm font-semibold uppercase tracking-wide"
-              >Full Name</span
-            >
-            <input
-              class="w-full rounded-lg border border-slate-200 dark:border-[#3b5254] bg-slate-50 dark:bg-[#111718] text-slate-900 dark:text-white focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400 outline-none px-4 py-3 transition-all placeholder:text-slate-400 dark:placeholder:text-[#9db7b9]"
-              placeholder="John Doe"
-              type="text"
-            />
-          </label>
-          <label class="flex flex-col gap-2">
-            <span
-              class="text-slate-700 dark:text-white text-sm font-semibold uppercase tracking-wide"
-              >Email Address</span
-            >
-            <input
-              class="w-full rounded-lg border border-slate-200 dark:border-[#3b5254] bg-slate-50 dark:bg-[#111718] text-slate-900 dark:text-white focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400 outline-none px-4 py-3 transition-all placeholder:text-slate-400 dark:placeholder:text-[#9db7b9]"
-              placeholder="john@example.com"
-              type="email"
-            />
-          </label>
-        </div>
-        <label class="flex flex-col gap-2">
-          <span
-            class="text-slate-700 dark:text-white text-sm font-semibold uppercase tracking-wide"
-            >Project Details</span
-          >
-          <textarea
-            class="w-full rounded-lg border border-slate-200 dark:border-[#3b5254] bg-slate-50 dark:bg-[#111718] text-slate-900 dark:text-white focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400 outline-none px-4 py-3 transition-all placeholder:text-slate-400 dark:placeholder:text-[#9db7b9] resize-none"
-            placeholder="Describe your vision, goals, and timeline..."
-            rows="6"></textarea>
-        </label>
-        <div class="flex items-center justify-between pt-4">
-          <p
-            class="text-xs text-slate-500 dark:text-slate-400 italic flex items-center gap-1"
-          >
-            <span class="material-symbols-outlined text-sm">schedule</span>
-            Average response time: &lt; 24 hours
-          </p>
-          <button
-            class="bg-cyan-400 text-neutral-950 font-bold px-8 py-3 rounded-lg hover:shadow-[0_0_20px_rgba(19,218,236,0.3)] transition-all active:scale-95 flex items-center gap-2"
-            type="submit"
-          >
-            Send Message
-            <span class="material-symbols-outlined">send</span>
-          </button>
-        </div>
-      </form>
-    </div>
-    <!-- Sidebar Modules -->
-    <div class="md:col-span-5 lg:col-span-4 flex flex-col gap-6">
-      <!-- Location Card -->
       <div
-        class="relative overflow-hidden bg-white dark:bg-[#1c2627] rounded-xl border border-slate-200 dark:border-[#3b5254] p-6 shadow-sm min-h-[160px] group"
+        class="absolute inset-0 opacity-20 grayscale group-hover:grayscale-0 transition-all duration-500 bg-cover bg-center"
       >
+        <Image src={ImageMap} alt="Map" class="w-full h-full object-cover" />
+      </div>
+      <div class="relative z-10 h-full flex flex-col justify-end">
         <div
-          class="absolute inset-0 opacity-10 grayscale group-hover:grayscale-0 transition-all duration-500 bg-cover bg-center"
-          data-alt="Simplified minimalist map of New York City"
-          data-location="New York City"
-          style='
-                  background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQ74TTBcvKyXgjfZpsgEjqtCJE0vu3RaYvUgkfzihrddLBy9t9t9mQCFuv_N836yhNTT96DgPw__NDjsU_4xcNqRVFHLnkIbFHTvBnN0-xuOg9-kF0jQ2phYiR_kM52f9NxgVdtqmLiSg3Oy4PtlKC1ydEpFG-RVLcAMAPkSJK17igP1ZJfsHRaEfVk2SB-GRe14LQ-QiWAgM1VcmO3ztXyLlcCRQoITQXFtVCTn1n2SCi5TuQQPpVllBMeI58sBDU7sclqDcOJmg");
-                '
+          class="size-12 rounded-lg bg-primary/20 flex items-center justify-center text-primary mb-4"
         >
+          <Icon icon="location" />
         </div>
-        <div class="relative z-10">
-          <div
-            class="size-10 rounded-lg bg-cyan-400/20 flex items-center justify-center text-cyan-400 mb-4"
-          >
-            <span class="material-symbols-outlined">location_on</span>
-          </div>
-          <h3 class="text-slate-900 dark:text-white text-xl font-bold">
-            Based in NYC
-          </h3>
-          <p class="text-slate-600 dark:text-slate-400 text-sm">
-            Working remotely with teams worldwide.
-          </p>
-        </div>
+        <h3 class="text-slate-900 dark:text-white text-2xl font-bold">
+          Ubicado en Lima, Perú
+        </h3>
+        <p class="text-slate-600 dark:text-slate-400 text-base">
+          Disponible para trabajo remoto y colaboraciones con equipos
+          internacionales.
+        </p>
       </div>
-      <!-- Social Bento Grid Inner -->
+    </div>
+
+    <div class="md:col-span-5 lg:col-span-4 flex flex-col gap-6">
       <div class="grid grid-cols-2 gap-4">
-        <!-- LinkedIn -->
         <a
-          class="flex flex-col items-center justify-center p-6 bg-[#0077b5]/10 dark:bg-[#0077b5]/20 border border-[#0077b5]/30 rounded-xl hover:bg-[#0077b5]/20 dark:hover:bg-[#0077b5]/30 transition-all group"
-          href="#"
+          class="flex items-center justify-center p-6 bg-[#0077b5]/10 dark:bg-[#0077b5]/20 border border-[#0077b5]/30 rounded-xl hover:bg-[#0077b5]/20 dark:hover:bg-[#0077b5]/30 transition-all duration-300 group"
+          href="https://www.linkedin.com/in/anthony-meza-106385213/"
+          target="_blank"
         >
           <span
-            class="text-[#0077b5] font-bold text-sm mb-1 group-hover:scale-110 transition-transform"
-            >LinkedIn</span
+            class="flex items-center gap-2 text-[#0077b5] font-bold text-sm mb-1 group-hover:scale-110 transition-transform duration-300"
           >
-          <span class="text-xs text-slate-500 dark:text-slate-400"
-            >Professional</span
-          >
+            <Icon icon="linkedin" color="current" size="sm" pack="bxl" />
+            LinkedIn
+          </span>
         </a>
-        <!-- GitHub -->
+
         <a
-          class="flex flex-col items-center justify-center p-6 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl hover:bg-slate-200 dark:hover:bg-white/10 transition-all group"
-          href="#"
+          class="flex items-center justify-center p-6 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl hover:bg-slate-200 dark:hover:bg-white/10 transition-all group"
+          href="https://github.com/AnthonyML16"
+          target="_blank"
         >
           <span
-            class="text-slate-900 dark:text-white font-bold text-sm mb-1 group-hover:scale-110 transition-transform"
-            >GitHub</span
+            class="flex items-center gap-2 text-slate-900 dark:text-white font-bold text-sm mb-1 group-hover:scale-110 transition-transform"
           >
-          <span class="text-xs text-slate-500 dark:text-slate-400"
-            >Codebase</span
-          >
-        </a>
-        <!-- Twitter/X -->
-        <a
-          class="flex flex-col items-center justify-center p-6 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl hover:bg-slate-200 dark:hover:bg-white/10 transition-all group"
-          href="#"
-        >
-          <span
-            class="text-slate-900 dark:text-white font-bold text-sm mb-1 group-hover:scale-110 transition-transform"
-            >Twitter</span
-          >
-          <span class="text-xs text-slate-500 dark:text-slate-400">Updates</span
-          >
-        </a>
-        <!-- Calendar/Meeting -->
-        <a
-          class="flex flex-col items-center justify-center p-6 bg-cyan-400/10 border border-cyan-400/30 rounded-xl hover:bg-cyan-400/20 transition-all group"
-          href="#"
-        >
-          <span
-            class="text-cyan-400 font-bold text-sm mb-1 group-hover:scale-110 transition-transform"
-            >Schedule</span
-          >
-          <span class="text-xs text-slate-500 dark:text-slate-400"
-            >Video Call</span
-          >
+            <Icon icon="github" color="current" size="sm" pack="bxl" />
+            GitHub
+          </span>
         </a>
       </div>
-      <!-- Email Module -->
+
       <div
         class="bg-white dark:bg-[#1c2627] rounded-xl border border-slate-200 dark:border-[#3b5254] p-6 shadow-sm flex items-center gap-4"
       >
         <div
-          class="size-12 rounded-full bg-slate-100 dark:bg-[#111718] flex items-center justify-center text-cyan-400"
+          class="size-12 rounded-full bg-slate-100 dark:bg-[#111718] flex items-center justify-center text-primary"
         >
-          <span class="material-symbols-outlined">alternate_email</span>
+          <Icon icon="at" color="current" size="sm" />
         </div>
         <div>
           <p
             class="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider"
           >
-            Direct Email
+            Correo directo
           </p>
           <a
-            class="text-slate-900 dark:text-white font-semibold hover:text-cyan-400 transition-colors"
-            href="mailto:hello@devportfolio.com">hello@devportfolio.com</a
+            class="text-slate-900 dark:text-white font-semibold hover:text-primary transition-colors"
+            href="mailto:luis.anthony.laml@gmail.com"
+            target="_blank"
           >
+            luis.anthony.laml@gmail.com
+          </a>
         </div>
       </div>
     </div>
