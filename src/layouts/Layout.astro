@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import Header from "../components/header.astro";
 import Footer from "../components/footer.astro";
@@ -44,6 +45,8 @@ const {
       href="https://cdn.boxicons.com/transformations.min.css"
       rel="stylesheet"
     />
+
+    <ClientRouter />
   </head>
   <body
     class="bg-neutral-100 dark:bg-neutral-950 font-display text-slate-900 dark:text-white min-h-screen"
@@ -60,14 +63,22 @@ const {
     <Footer />
 
     <script>
-      const spotlight = document.getElementById("spotlight");
-      document.addEventListener("mousemove", (e) => {
-        if (spotlight) {
-          const x = e.clientX;
-          const y = e.clientY;
-          spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(6, 182, 212, 0.1) 0%, transparent 20%)`;
-        }
-      });
+      function setupSpotlight() {
+        const spotlight = document.getElementById("spotlight");
+
+        const handleMouseMove = (e: MouseEvent) => {
+          if (spotlight) {
+            const x = e.clientX;
+            const y = e.clientY;
+            spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(6, 182, 212, 0.1) 0%, transparent 20%)`;
+          }
+        };
+
+        document.addEventListener("mousemove", handleMouseMove);
+      }
+
+      setupSpotlight();
+      document.addEventListener("astro:page-load", setupSpotlight);
     </script>
   </body>
 </html>

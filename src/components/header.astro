@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import logo from "../images/isotipo_black.svg";
 import Link from "./link-menu.astro";
 import ButtonPrimary from "./button/primary.astro";
+import Icon from "./icon.astro";
 
 const navItems = [
   { href: "/", label: "Inicio" },
@@ -15,7 +16,7 @@ const navItems = [
 
 <nav class="fixed top-0 w-full z-50 p-4">
   <div
-    class="max-w-7xl mx-auto flex items-center justify-between glass rounded-xl px-4 py-3 border border-teal-950/30"
+    class="max-w-7xl mx-auto flex items-center justify-between glass rounded-xl px-4 py-3 border border-teal-950/30 relative z-50"
   >
     <a href="/" class="flex items-center gap-2">
       <div
@@ -33,13 +34,92 @@ const navItems = [
         </span>
       </h1>
     </a>
+
+    <!-- Desktop Menu -->
     <div class="hidden md:flex items-center gap-8">
       {navItems.map((item) => <Link href={item.href} label={item.label} />)}
     </div>
-    <a href="/contact">
+
+    <!-- Desktop Contact Button -->
+    <a href="/contact" class="hidden md:block">
       <ButtonPrimary class="px-5! py-2! rounded-full!">
+        Contáctame
+      </ButtonPrimary>
+    </a>
+
+    <!-- Mobile Hamburger Button -->
+    <button
+      id="menu-toggle"
+      class="md:hidden text-white focus:outline-none"
+      aria-label="Toggle menu"
+    >
+      <Icon icon="menu" class="3xl" />
+    </button>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div
+    id="mobile-menu"
+    class="fixed inset-0 bg-neutral-950/90 backdrop-blur-md z-40 flex flex-col items-center justify-center gap-8 transition-transform duration-300 translate-x-full md:hidden"
+  >
+    <!-- Close Button -->
+    <button
+      id="menu-close"
+      class="absolute top-6 right-6 text-white focus:outline-none"
+      aria-label="Close menu"
+    >
+      <Icon icon="close" class="4xl" />
+    </button>
+
+    <!-- Mobile Links -->
+    <div class="flex flex-col items-center gap-6">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-2xl text-white/80 font-medium hover:text-primary transition-colors mobile-link"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- Mobile Contact Button -->
+    <a href="/contact" class="mobile-link mt-4">
+      <ButtonPrimary class="px-8! py-3! rounded-full! text-lg!">
         Contáctame
       </ButtonPrimary>
     </a>
   </div>
 </nav>
+
+<script>
+  function initNavigation() {
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuClose = document.getElementById("menu-close");
+    const mobileLinks = document.querySelectorAll(".mobile-link");
+
+    if (!menuToggle || !mobileMenu) return;
+
+    function toggleMenu() {
+      mobileMenu?.classList.toggle("translate-x-full");
+      document.body.classList.toggle("overflow-hidden");
+    }
+
+    menuToggle.onclick = toggleMenu;
+    if (menuClose) menuClose.onclick = toggleMenu;
+
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("translate-x-full");
+        document.body.classList.remove("overflow-hidden");
+      });
+    });
+  }
+
+  initNavigation();
+
+  document.addEventListener("astro:page-load", initNavigation);
+</script>
