@@ -1,338 +1,187 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 
-const posts = [
-  {
-    title: "Getting Started with Astro 5.0",
-    date: "February 1, 2026",
-    excerpt:
-      "Why Astro is becoming my go-to framework for content-heavy websites and how you can get started.",
-    readTime: "5 min read",
-  },
-  {
-    title: "The Future of Web Styling",
-    date: "January 15, 2026",
-    excerpt:
-      "Exploring the new features in Tailwind CSS v4 and how they improvde developer experience.",
-    readTime: "4 min read",
-  },
-  {
-    title: "Building Accessible Components",
-    date: "December 20, 2025",
-    excerpt:
-      "A guide to creating inclusive web applications ensuring everyone can use your software.",
-    readTime: "7 min read",
-  },
-];
+import Layout from "../layouts/Layout.astro";
+import TitlePage from "../components/title/page.astro";
+import Card from "../components/card/project.astro";
+
+const posts = await getCollection("posts");
+
+const sortPost = posts.sort((a, b) => {
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+
+const featuredPost = sortPost[0];
+const remainingPosts = sortPost.slice(1);
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/images/posts/*.webp",
+);
+
+export const prerender = true;
 ---
 
 <Layout title="Blog | Anthony's Portfolio">
-  <div class="mb-12">
-    <h2 class="text-5xl font-black tracking-tight mb-4">
-      Engineering <span class="text-cyan-400 italic">Insights</span>
-    </h2>
-    <p class="text-slate-400 max-w-2xl text-lg">
-      Deep dives into modern web architecture, UI/UX patterns, and the future of
-      frontend engineering.
-    </p>
-  </div>
+  <TitlePage
+    pulse="Publicaciones"
+    title="Engineering"
+    colorTitle="Insights"
+    description="Deep dives into modern web architecture, UI/UX patterns, and the future of frontend engineering."
+  />
+
   <!-- Bento Grid Layout -->
   <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-6">
     <!-- Featured Post (Large Tile) -->
-    <div
-      class="md:col-span-3 md:row-span-2 glass bento-card rounded-xl overflow-hidden flex flex-col group"
-    >
-      <div class="relative h-64 md:h-full overflow-hidden">
-        <div
-          class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-          data-alt="Abstract 3D rendering of neon geometric shapes"
-          style='
-                background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtCYUH5hb97S8spGGnWyeyOpMvCLleD_vKu8ElE3pdj2q0tpPwp2dCW8HOi0jwNrFOJLkCrMsnecYSvE2_xca9CBJQ0KsNQMNpPKJqyCRxQt5qY_x1vdFbiR1WOQ-KiUoLFfHZOVJVkwOVp_lVtkiRLL-k2SvsQEEYcFtWckrkb49R2oswxC__KPBnRR6zQdKYbG272tqWT9frGhZyzRb5baz4BlijlMi9R7LqceRqVolhs9wkqACSf-B3cnp4PpbvIopXvYIdmu4");
-              '
-        >
-        </div>
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent"
-        >
-        </div>
-        <div class="absolute top-6 left-6">
-          <span
-            class="bg-cyan-400/20 text-cyan-400 border border-cyan-400/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest backdrop-blur-md"
-            >Featured Post</span
-          >
-        </div>
-        <div class="absolute bottom-0 left-0 p-8 w-full">
-          <div class="flex items-center gap-4 mb-3 text-slate-300 text-sm">
-            <span class="flex items-center gap-1"
-              ><span class="material-symbols-outlined text-sm">schedule</span>
-              12 min read</span
-            >
-            <span class="flex items-center gap-1"
-              ><span class="material-symbols-outlined text-sm"
-                >calendar_today</span
+    {
+      featuredPost && (
+        <div class="md:col-span-3 md:row-span-2 glass bento-card rounded-xl overflow-hidden flex flex-col group relative">
+          <div class="relative h-64 md:h-full overflow-hidden">
+            <div class="absolute inset-0 z-0">
+              <Image
+                src={images[`/src/images/posts/${featuredPost.data.img}`]()}
+                alt={featuredPost.data.title}
+                class="w-full h-full object-cover opacity-50 transition-transform duration-500 group-hover:scale-105 group-hover:opacity-75"
+              />
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent z-10" />
+
+            <div class="absolute top-6 left-6 z-20">
+              <span class="bg-cyan-400/20 text-cyan-400 border border-cyan-400/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest backdrop-blur-md">
+                Último Post
+              </span>
+            </div>
+
+            <div class="absolute bottom-0 left-0 p-8 w-full z-20">
+              <div class="flex items-center gap-4 mb-3 text-slate-300 text-sm">
+                <span class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">
+                    schedule
+                  </span>
+                  {featuredPost.data.readTime || "10 min"} read
+                </span>
+                <span class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">
+                    calendar_today
+                  </span>
+                  {new Date(featuredPost.data.date).toLocaleDateString(
+                    "es-ES",
+                    { day: "2-digit", month: "short", year: "numeric" },
+                  )}
+                </span>
+              </div>
+              <h3 class="text-3xl md:text-4xl font-extrabold text-white mb-4 group-hover:text-cyan-400 transition-colors">
+                {featuredPost.data.title}
+              </h3>
+              <p class="text-slate-300 text-lg mb-6 line-clamp-2 max-w-3xl">
+                {featuredPost.data.description}
+              </p>
+              <a
+                href={`/post/${featuredPost.slug}`}
+                class="inline-flex items-center gap-2 bg-cyan-400 text-neutral-950 px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform"
               >
-              Dec 18, 2023</span
-            >
+                Leer Artículo Completo
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </a>
+            </div>
           </div>
-          <h3
-            class="text-3xl md:text-4xl font-extrabold text-white mb-4 group-hover:text-cyan-400 transition-colors"
-          >
-            Mastering React Server Components: A New Era of Performance
-          </h3>
-          <p class="text-slate-300 text-lg mb-6 line-clamp-2 max-w-3xl">
-            Understanding the paradigm shift in how we build and deliver modern
-            React applications to the edge.
-          </p>
-          <button
-            class="flex items-center gap-2 bg-cyan-400 text-neutral-950 px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform"
-          >
-            Read Full Article
-            <span class="material-symbols-outlined">arrow_forward</span>
-          </button>
         </div>
-      </div>
-    </div>
+      )
+    }
+
     <!-- Categories (Side Tile) -->
     <div
       class="md:col-span-1 md:row-span-1 glass bento-card rounded-xl p-6 flex flex-col"
     >
       <div class="flex items-center gap-2 mb-6">
         <span class="material-symbols-outlined text-cyan-400">category</span>
-        <h3 class="font-bold text-lg">Topics</h3>
+        <h3 class="font-bold text-lg">Temas</h3>
       </div>
       <div class="flex flex-wrap gap-2">
-        <a
-          class="bg-white/5 hover:bg-cyan-400/20 hover:text-cyan-400 border border-white/10 px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-2"
-          href="#"
-        >
-          <span class="material-symbols-outlined text-xs">atm</span> React
-        </a>
-        <a
-          class="bg-white/5 hover:bg-cyan-400/20 hover:text-cyan-400 border border-white/10 px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-2"
-          href="#"
-        >
-          <span class="material-symbols-outlined text-xs">code</span>
-          TypeScript
-        </a>
-        <a
-          class="bg-white/5 hover:bg-cyan-400/20 hover:text-cyan-400 border border-white/10 px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-2"
-          href="#"
-        >
-          <span class="material-symbols-outlined text-xs">palette</span>
-          UI/UX
-        </a>
-        <a
-          class="bg-white/5 hover:bg-cyan-400/20 hover:text-cyan-400 border border-white/10 px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-2"
-          href="#"
-        >
-          <span class="material-symbols-outlined text-xs">settings</span>
-          Rust
-        </a>
-        <a
-          class="bg-white/5 hover:bg-cyan-400/20 hover:text-cyan-400 border border-white/10 px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-2"
-          href="#"
-        >
-          <span class="material-symbols-outlined text-xs">bolt</span>
-          Next.js
-        </a>
-        <a
-          class="bg-white/5 hover:bg-cyan-400/20 hover:text-cyan-400 border border-white/10 px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-2"
-          href="#"
-        >
-          <span class="material-symbols-outlined text-xs">terminal</span>
-          Node.js
-        </a>
+        {
+          ["React", "TypeScript", "PHP", "Laravel", "Next.js", "Node.js"].map(
+            (topic) => (
+              <span class="bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg text-xs text-slate-300 cursor-default">
+                {topic}
+              </span>
+            ),
+          )
+        }
       </div>
     </div>
-    <!-- Newsletter (Side Tile) -->
+
     <div
       class="md:col-span-1 md:row-span-1 glass bento-card rounded-xl p-6 bg-cyan-400/5 flex flex-col justify-between border-cyan-400/20"
     >
-      <div>
-        <h3 class="font-bold text-lg mb-2">Weekly Briefing</h3>
-        <p class="text-sm text-slate-400 mb-4">
-          Get curated frontend resources and articles delivered to your inbox.
-        </p>
-      </div>
+      <h3 class="font-bold text-lg mb-2 leading-tight text-white">
+        Newsletter Semanal
+      </h3>
       <div class="space-y-3">
         <input
-          class="w-full bg-neutral-950 border-white/10 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400"
-          placeholder="your@email.com"
+          class="w-full bg-neutral-950 border-white/10 rounded-lg px-4 py-2 text-sm text-white outline-none focus:border-cyan-400"
+          placeholder="tu@email.com"
           type="email"
         />
         <button
           class="w-full bg-cyan-400 text-neutral-950 py-2 rounded-lg text-sm font-bold"
+          >Suscribirme</button
         >
-          Subscribe
-        </button>
       </div>
     </div>
-    <!-- Recent Post 1 -->
-    <div class="glass bento-card rounded-xl overflow-hidden group">
-      <div
-        class="h-40 bg-cover bg-center"
-        data-alt="Close up of high-quality code on a dark screen"
-        style='
-              background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAGl7GdlwXGFHag_k_h3qfcuydxXbxqmZ6JhFsDrmJBTIzX7aI_oRlGhD-seMC1R4fnyDBY32lL8vGMF4GqYpao18HC7Lr7cn5b5wzz7lWdSfpQXCv1slQUxq9aVjmx8UllcoV6oW27MVIvDXltjCx44SaZAVqyoWkPQy4R-gMtQM_DtK5usgHHWcT3oCtl0OlJdpkyygfapGVgSWwOOXhcoCTZGUkM__oM2rnlRp6kuXNjcNbB1AdQzmNVVnB_MuCNfhEwpKBgiPE");
-            '
-      >
-      </div>
-      <div class="p-5">
-        <div
-          class="text-xs text-slate-400 mb-2 uppercase tracking-wide font-bold"
+
+    {
+      remainingPosts.map((post) => (
+        <a
+          href={`/blog/${post.slug}`}
+          class="glass bento-card rounded-xl overflow-hidden group flex flex-col"
         >
-          TypeScript • 6 min
-        </div>
-        <h4
-          class="font-bold text-white group-hover:text-cyan-400 transition-colors mb-2"
-        >
-          Advanced Generics in TS
-        </h4>
-        <p class="text-sm text-slate-400 line-clamp-2">
-          Level up your type safety with these complex generic patterns...
-        </p>
-      </div>
-    </div>
-    <!-- Recent Post 2 -->
-    <div class="glass bento-card rounded-xl overflow-hidden group">
-      <div
-        class="h-40 bg-cover bg-center"
-        data-alt="Retro computer aesthetic with cyan lighting"
-        style='
-              background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBiCMm96iwlXhEdUppd1DZ2-0OWSkEhuoIUmxZehpN0kLUipylq9RTHM7cZkm9chA_etueAHcuDLkpWcqtjHX96rgerE2vBCWozN6mol0t1b1c_9zUDZPTeYZNw08h7kJhiK-mujhJaMM0wXXLdBt1sXxcagyHTUjQw7Ukpruv2XbLJ2l-JGl-Tv4McFPw6g62wgYGSoXtaiuwKdZxRoFRwmCz6LyKtTI49gSn2Mv6UfK-qnUtrC7sw44_-1ybqru7rqyrk0MyjRqQ");
-            '
-      >
-      </div>
-      <div class="p-5">
-        <div
-          class="text-xs text-slate-400 mb-2 uppercase tracking-wide font-bold"
-        >
-          UI/UX • 8 min
-        </div>
-        <h4
-          class="font-bold text-white group-hover:text-cyan-400 transition-colors mb-2"
-        >
-          Bento Grids: The New Trend
-        </h4>
-        <p class="text-sm text-slate-400 line-clamp-2">
-          Why modern documentation is moving away from linear layouts...
-        </p>
-      </div>
-    </div>
-    <!-- Recent Post 3 -->
-    <div class="glass bento-card rounded-xl overflow-hidden group">
-      <div
-        class="h-40 bg-cover bg-center"
-        data-alt="Programmer working late at night with neon lights"
-        style='
-              background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDN1iVpA1DdwYqIlq5FsWtM5d0Mk37qqmLh9gp-3XKEpr3I2VSe00owyrfOD33ZbKvu6gDcz_eZ-altNRGROUBzQ0bCXVxsc_WWCacj9zJVzxCp3icjjBkGcl2n1glOD0apv4yhDWeUULvTCD6cbl6cU8ZH1EWz9zG-jFNM06uUgKwzE53bujuf0G89NV9yEa3cSC2fRbetR41WSNQZbChZPFZRkrBRftZmvLVig7EH9REfUihk4hvTt7S1zp46cfrJKwGdPK6IVPY");
-            '
-      >
-      </div>
-      <div class="p-5">
-        <div
-          class="text-xs text-slate-400 mb-2 uppercase tracking-wide font-bold"
-        >
-          Performance • 5 min
-        </div>
-        <h4
-          class="font-bold text-white group-hover:text-cyan-400 transition-colors mb-2"
-        >
-          Edge Computing 101
-        </h4>
-        <p class="text-sm text-slate-400 line-clamp-2">
-          Deploying your logic closer to your users for zero latency...
-        </p>
-      </div>
-    </div>
-    <!-- Stats/Socials Mini Tile -->
+          <div class="h-40 overflow-hidden relative">
+            <Image
+              src={images[`/src/images/posts/${post.data.img}`]()}
+              alt={post.data.title}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+            />
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="text-[10px] text-cyan-400 mb-2 uppercase tracking-widest font-bold">
+                {post.data.category || "Engineering"} •{" "}
+                {post.data.readTime || "5 min"}
+              </div>
+              <h4 class="font-bold text-white group-hover:text-cyan-400 transition-colors mb-2 line-clamp-2">
+                {post.data.title}
+              </h4>
+              <p class="text-xs text-slate-400 line-clamp-2">
+                {post.data.description}
+              </p>
+            </div>
+          </div>
+        </a>
+      ))
+    }
+
     <div
       class="glass bento-card rounded-xl p-5 flex flex-col justify-center text-center"
     >
       <div class="grid grid-cols-2 gap-4">
-        <div class="p-3 bg-white/5 rounded-lg border border-white/5">
+        <div
+          class="p-3 bg-white/5 rounded-lg border border-white/5 text-center"
+        >
+          <div class="text-2xl font-black text-cyan-400">{posts.length}</div>
+          <div class="text-[10px] text-slate-500 uppercase tracking-widest">
+            Artículos
+          </div>
+        </div>
+        <div
+          class="p-3 bg-white/5 rounded-lg border border-white/5 text-center"
+        >
           <div class="text-2xl font-black text-cyan-400">12k</div>
           <div class="text-[10px] text-slate-500 uppercase tracking-widest">
-            Readers
-          </div>
-        </div>
-        <div class="p-3 bg-white/5 rounded-lg border border-white/5">
-          <div class="text-2xl font-black text-cyan-400">45+</div>
-          <div class="text-[10px] text-slate-500 uppercase tracking-widest">
-            Articles
+            Lectores
           </div>
         </div>
       </div>
-      <div class="mt-4 flex justify-around text-slate-400">
-        <span
-          class="material-symbols-outlined hover:text-cyan-400 cursor-pointer"
-          >public</span
-        >
-        <span
-          class="material-symbols-outlined hover:text-cyan-400 cursor-pointer"
-          >share</span
-        >
-        <span
-          class="material-symbols-outlined hover:text-cyan-400 cursor-pointer"
-          >alternate_email</span
-        >
-      </div>
     </div>
   </div>
-  <!-- Pagination / Footer -->
-  <div
-    class="mt-16 flex items-center justify-between py-8 border-t border-white/5"
-  >
-    <p class="text-sm text-slate-500">
-      © 2023 DevPortfolio. Built with React &amp; Tailwind.
-    </p>
-    <div class="flex gap-2">
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:border-cyan-400/50 text-slate-400 transition-all"
-      >
-        <span class="material-symbols-outlined">chevron_left</span>
-      </button>
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg bg-cyan-400 text-neutral-950 font-bold"
-      >
-        1
-      </button>
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:border-cyan-400/50 text-slate-400 transition-all"
-      >
-        2
-      </button>
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:border-cyan-400/50 text-slate-400 transition-all"
-      >
-        <span class="material-symbols-outlined">chevron_right</span>
-      </button>
-    </div>
-  </div>
-  <!-- <section class="max-w-4xl mx-auto py-10">
-    <h1 class="text-4xl font-bold mb-12 text-center">
-      Recent <span class="text-indigo-400">writings</span>
-    </h1>
-
-    <div class="space-y-8">
-      {
-        posts.map((post) => (
-          <article class="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/40 transition-all hover:bg-slate-800/50 group cursor-pointer">
-            <div class="flex items-center gap-4 text-sm text-slate-500 mb-3">
-              <time>{post.date}</time>
-              <span>•</span>
-              <span>{post.readTime}</span>
-            </div>
-            <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">
-              {post.title}
-            </h2>
-            <p class="text-slate-400 leading-relaxed mb-4">{post.excerpt}</p>
-            <div class="flex items-center text-indigo-400 font-medium group-hover:translate-x-1 transition-transform">
-              Read more <span class="ml-2">&rarr;</span>
-            </div>
-          </article>
-        ))
-      }
-    </div>
-  </section> -->
 </Layout>
