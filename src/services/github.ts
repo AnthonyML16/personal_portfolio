@@ -21,6 +21,11 @@ interface GitHubResponse {
 export async function getGitHubMetrics(username: string) {
   const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
 
+  if (!GITHUB_TOKEN) {
+    console.warn("GitHub Service: falta la variable GITHUB_TOKEN, se muestra actividad vacía.");
+    return { total: 0, columns: [] };
+  }
+
   const query = `
     query($username: String!) {
       user(login: $username) {
@@ -49,9 +54,12 @@ export async function getGitHubMetrics(username: string) {
       body: JSON.stringify({ query, variables: { username } }),
     });
 
-    if (!response.ok) throw new Error("Failed to fetch GitHub data");
+    if (!response.ok) {
+      throw new Error(`Failed to fetch GitHub data: ${response.status} ${await response.text()}`);
+    }
 
-    const { data }: { data: GitHubResponse } = await response.json();
+    const { data, errors }: { data: GitHubResponse; errors?: unknown } = await response.json();
+    if (errors) throw new Error(`GitHub GraphQL errors: ${JSON.stringify(errors)}`);
 
     const calendar = data.user.contributionsCollection.contributionCalendar;
 
